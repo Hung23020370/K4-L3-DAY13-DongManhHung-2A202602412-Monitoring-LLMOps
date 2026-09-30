@@ -8,8 +8,8 @@
 - **MSSV:** 2A202602412
 - **Lớp:** K4-L3B
 - **Repository URL:** https://github.com/Hung23020370/K4-L3-DAY13-DongManhHung-2A202602412-Monitoring-LLMOps
-- **Commit SHA cuối:** <Điền 7 ký tự commit SHA cuối cùng từ lệnh `git log -1 --oneline`>
-- **Challenge ID:** rag_slow (hoặc mã challenge trong config/challenge.json)
+- **Commit SHA cuối:** 762f83f
+- **Challenge ID:** day13-k4-l3b-monitoring-llmops-v1
 - **Tên project Langfuse cá nhân:** `day13-k4-l3b-2A202602412`
 
 ## 2. Evidence index
@@ -79,8 +79,8 @@
 - **Version/label baseline:** Version 1 — gán nhãn `baseline`, `production`.
 - **Version/label candidate:** Version 2 — thêm yêu cầu format ngắn gọn 1-2 câu, gán nhãn `candidate`.
 - **Trace ID của mỗi version:**
-  - Version 1 (`baseline`): `<Dán Trace ID của trace chạy với baseline>`
-  - Version 2 (`candidate`): `<Dán Trace ID của trace chạy với candidate>`
+  - Version 1 (`baseline`): `97d127fec96b7d3a2d2f04fdecb5eab0`
+  - Version 2 (`candidate`): `7b46b204635ad1bb39c7d22009880886`
 - **Cách promote và rollback `production`:**
   - **Promote:** Trên Langfuse UI, chuyển nhãn `production` từ Version 1 sang Version 2; request mới sẽ tự động nạp prompt Version 2 mà không cần sửa code.
   - **Rollback:** Khi phát hiện output không mong muốn, truy cập lại Version 1 và gán lại nhãn `production` cho Version 1. Ứng dụng lập tức chuyển về dùng prompt V1.
@@ -116,7 +116,7 @@
   - Log line trích xuất từ `data/logs.jsonl`:
     `{"service": "api", "latency_ms": 2670, "ttft_ms": 50, "tokens_in": 46, "tokens_out": 164, "cost_usd": 0.002598, "quality_score": 0.9, "tool_name": "retrieval", "tool_success": true, "event": "response_sent", "correlation_id": "req-a20e5bf9", "level": "info", "ts": "2026-09-30T04:12:00Z"}`
 - **Trace ID và span gây ảnh hưởng:**
-  - Trace ID: `<Dán chuỗi Trace ID của req-a20e5bf9 trên Langfuse>`
+  - Trace ID: `6eed8f46d49140b0e579de9576228cdd`
   - Span gây ảnh hưởng: Span con **`retrieval`** bị kéo dài bất thường (~2500ms), trong khi span `generation` chỉ tốn ~150ms.
 - **Root cause:**
   - Hàm `retrieve()` trong module RAG bị nghẽn (giả lập bởi kịch bản incident `rag_slow` chèn sleep 2.5s vào bước truy xuất dữ liệu), gây kéo dài thời gian phản hồi toàn trình của Agent.
